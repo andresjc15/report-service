@@ -13,3 +13,9 @@ management:
     web:
       exposure:
         include: '*'
+
+topic:
+  movement:
+    name: MovementTopic
+
+
