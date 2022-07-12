@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pe.com.nttdata.report.account.model.Account;
+import pe.com.nttdata.report.customer.model.Customer;
+import pe.com.nttdata.report.customer.model.EnterpriseCustomer;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,6 +25,7 @@ public class Movement {
     private LocalDateTime time;
     private String description;
     private Account account;
+    private Customer customer;
     private boolean canceled;
     private boolean isActive;
     private Date createdAt;

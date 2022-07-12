@@ -7,6 +7,20 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: arcp1512@gmail.com
+    password: test014560
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
 
 management:
   endpoints:
@@ -17,5 +31,7 @@ management:
 topic:
   movement:
     name: MovementTopic
+
+
 
 

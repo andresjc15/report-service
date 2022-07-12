@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import pe.com.nttdata.email.EmailServiceImpl;
 import pe.com.nttdata.movement.event.MovementCreatedEvent;
+import pe.com.nttdata.report.customer.model.Customer;
 import pe.com.nttdata.report.movement.model.event.Event;
 import pe.com.nttdata.report.movement.model.Movement;
 import pe.com.nttdata.report.movement.model.MovementReport;
@@ -75,7 +79,26 @@ public class MovementServiceImpl implements MovementService {
             log.info("Received Movement created event .... with Id={}, data={}",
                     movementCreatedEvent.getId(),
                     movementCreatedEvent.getData().toString());
+            movementCreatedEvent.getData().setCustomer(new Customer());
+            movementCreatedEvent.getData().getCustomer().setEmail("telescopio322@gmail.com");
+            String email =  movementCreatedEvent.getData().getCustomer().getEmail();
+
+            sendMessage(email, "New movement", movementCreatedEvent.getData().getDescription());
         }
+    }
+
+    @Autowired
+    private JavaMailSender emailSender;
+
+    public void sendMessage(String to, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("arcp1512@gmail.com");
+        //message.setTo("telescopio322@gmail.com");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        //emailSender.send(message);
+        log.info("[MAIL SENT]: " + message.getTo().toString());
     }
 
 
